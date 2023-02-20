@@ -1,5 +1,5 @@
-//HECHO POR JUAN JALABERT RIQUELME
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -57,6 +57,7 @@ class Main {
         puente.addExit("O", 2);
         bosque.addExit("S", 1);
         bosque.addExit("O", 2);
+
     }
 
     public static void main(String[] args) {
@@ -64,24 +65,25 @@ class Main {
         Scanner sc = new Scanner(System.in);
         int variable1 = 1;
         boolean variable2 = true;
+        boolean repe ;
         while (variable2) {
-            if (variable1 == 0){
-                System.out.println("Nos vemos!");
-                break;
-            }
-            try {
-                System.out.println(ubicaciones.get(variable1).getDescripcion());
-                System.out.println("Tus salidas válidas son " + ubicaciones.get(variable1).getExits() + "{Q para salir del Juego}");
-                System.out.println("¿Hacia donde quieres ir?");
-                String opt = sc.nextLine();
-                variable1 = ubicaciones.get(variable1).getExits().get(opt.toUpperCase());
-                if (opt.equals("Q") | opt.equals("q")) {
-                    System.out.println("Saliendo...");
+            System.out.println(ubicaciones.get(variable1).getDescripcion());
+            System.out.println("Tus salidas válidas son " + ubicaciones.get(variable1).getExits());
+            do {
+                repe = true;
+                try {
+                    System.out.println("¿Hacia donde quieres ir?");
+                    String opt = sc.nextLine();
+                    if (opt.equals("Q") | opt.equals("q")) {
+                        System.out.println("Saliendo...");
+                        System.exit(0);
+                    }
+                    variable1 = ubicaciones.get(variable1).getExits().get(opt.toUpperCase());
+                } catch (NullPointerException e) {
+                    System.out.println("Este caracter no es valido");
+                    repe = false;
                 }
-            }
-            catch (NullPointerException e) {
-                System.out.println("No se acepta ese carácter");
-            }
+            } while (repe == false);
         }
         }
     }
